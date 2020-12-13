@@ -1,5 +1,23 @@
+html {
+  scroll-behavior: smooth;
+  overflow-y: overlay;
+  overflow-x: hidden;
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #e7f5fb;
 }
 
 .App-logo {

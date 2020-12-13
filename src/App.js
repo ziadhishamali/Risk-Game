@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import './App.css'
+import Game from './components/Board/Game';
+import Start from './components/Start/Start';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [isStart, setIsStart] = useState(true)
+	const [isEnd, setIsEnd] = useState(false)
+	const [isEgypt, setIsEgypt] = useState(true)
+	const [mode, setMode] = useState("")
+	const [player1Agent, setPlayer1Agent] = useState("human")
+	const [player2Agent, setPlayer2Agent] = useState("AStar")
+
+	const submitStart = ({ isEgypt, mode, player1Agent, player2Agent }) => {
+		setIsEgypt(isEgypt)
+		setMode(mode)
+		setPlayer1Agent(player1Agent)
+		setPlayer2Agent(player2Agent)
+		setIsStart(false)
+	}
+
+	console.log({isEgypt, mode, player1Agent, player2Agent})
+
+	let component = <Start submitStart={submitStart} />
+	if (!isStart && !isEnd) {
+		component = <Game isEgypt={isEgypt} player1Agent={player1Agent} player2Agent={player2Agent} />
+	}
+
+  	return (
+		<div className="App">
+			{component}
+		</div>
+  	)
 }
 
 export default App;
