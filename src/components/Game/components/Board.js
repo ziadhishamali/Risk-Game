@@ -3,7 +3,11 @@ import React from 'react';
 import egyptMap from '../assets/egyptMap.jpg'
 import usaMap from '../assets/usaMap.jpg'
 
-const Board = ({ turn, numTurns, isEgypt }) => {
+/**
+ * The game board itself
+ * @param {turn, numTurns, isEgypt, cities} param0
+ */
+const Board = ({ turn, numTurns, isEgypt, cities }) => {
     return (
         <div className="board-wrapper">
             <div className="board-container">

@@ -75,6 +75,8 @@ class MapData {
         [0, 1, 39, 40, 15, 16],
         [8, 40,12,14],
     ]
+
+    
 }
  
 export default MapData;
