@@ -1,7 +1,9 @@
 import React from 'react';
 
-import egyptMap from '../assets/egyptMap.jpg'
-import usaMap from '../assets/usaMap.jpg'
+// import egyptMap from '../assets/eg.svg'
+// import usaMap from '../assets/us.svg'
+import { ReactComponent as EgyptMap } from '../assets/eg.svg'
+import { ReactComponent as UsaMap } from '../assets/us-2.svg'
 
 /**
  * The game board itself
@@ -14,7 +16,10 @@ const Board = ({ turn, numTurns, isEgypt, cities }) => {
     return (
         <div className="board-wrapper">
             <div className="board-container">
-                <img src={isEgypt ? egyptMap : usaMap} className="board-image" alt="board" />
+                {
+                    isEgypt ? <EgyptMap className="board-image" /> : <UsaMap className="board-image" />
+                }
+                {/*<img src={isEgypt ? egyptMap : usaMap} className="board-image" alt="board" />*/}
             </div>
 
             <div className="board-details">
@@ -25,7 +30,7 @@ const Board = ({ turn, numTurns, isEgypt, cities }) => {
 
                 <div className="board-details-item">
                     <h1>Turn</h1>
-                    <h2>{turn % 2 === 0 ? "player 1" : "player 2"}</h2>
+                    <h2>{isEgypt ? turn % 2 === 0 ? "El Sisi red" : "El Sisi blue" : turn % 2 === 0 ? "Trump" : "Biden"}</h2>
                     <span style={{ backgroundColor: turn % 2 === 0 ? "#c60203" : "#1c92d2" }}></span>
                 </div>
             </div>
