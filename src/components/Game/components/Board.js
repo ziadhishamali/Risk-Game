@@ -5,7 +5,10 @@ import usaMap from '../assets/usaMap.jpg'
 
 /**
  * The game board itself
- * @param {turn, numTurns, isEgypt, cities} param0
+ * @param {turn} param0 whose player turn
+ * @param {numTurns} param1 number of turns since start
+ * @param {isEgypt} param2 which map Egypt or USA
+ * @param {cities} param3 the cities of the map for displaying nodes on the map
  */
 const Board = ({ turn, numTurns, isEgypt, cities }) => {
     return (
