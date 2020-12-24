@@ -16,6 +16,7 @@
 .board-container svg {
     max-width: 100%;
     max-height: 700px;
+    position: relative;
 }
 
 .board-details {
@@ -61,4 +62,32 @@
     height: 30px;
     border-radius: 50px;
     margin-left: 10px;
+}
+
+path {
+    position: relative;
+    transform-origin: center center;
+    transform-box: fill-box;
+    transition: 1s;
+}
+
+path:hover {
+    stroke: white;
+    stroke-width: 2px;
+    opacity: 0.8;
+    /* filter: url(#dropshadow); */
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.hovertext {
+    position: absolute;
+    background-color: #cecece;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: #575656;
+    color: white;
 }
