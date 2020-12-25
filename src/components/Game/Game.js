@@ -82,7 +82,8 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
         }
 
         console.log("cities: ", cities, sum)
-    }, [])
+        setCities(cities)
+    }, [isEgypt])
 
     return (
         <div className="game-wrapper">
