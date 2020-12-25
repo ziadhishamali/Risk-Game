@@ -14,9 +14,10 @@ const mapData = new MapData()
 const Game = ({ isEgypt, player1Agent, player2Agent }) => {
     const [turn, setTurn] = useState(0)
     const [numTurns, setNumTurns] = useState(0)
-    
+
     // to be populated with the cities and their respective posX and posY
     const [cities, setCities] = useState([])
+    const [currentCity, setCurrentCity] = useState({});
 
     const onClickListner = (e, idx) => {
         console.log("path: " + idx)
@@ -60,6 +61,13 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                 element.style.fill = '#c60203' // red
             }
 
+            element.addEventListener('mouseover', (e) => {
+                setCurrentCity({
+                    name: element.getAttribute('name'),
+                    ...node
+                })
+            })
+
             // add the node to cities
             cities.push(node)
         }
@@ -87,9 +95,9 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
 
     return (
         <div className="game-wrapper">
-            <Board isEgypt={isEgypt} turn={turn} numTurns={numTurns} cities={cities} />
+            <Board isEgypt={isEgypt} turn={turn} numTurns={numTurns} cities={cities} currentCity={currentCity} />
         </div>
     )
 }
- 
+
 export default Game
