@@ -44,7 +44,7 @@ class PacifistAgent {
             for (let ii = 0; ii < city.neighbours.length; ii++) {
                 let prey = city.neighbours[ii];
                 if (city.armies - 1 > prey.armies && prey.armies < min && prey.owner !== owner) {
-                    max = prey.armies;
+                    min = prey.armies;
                     j = i;
                     jj = ii;
                 }
