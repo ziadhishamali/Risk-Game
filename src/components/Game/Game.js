@@ -17,6 +17,41 @@ import Dialog from '../Dialog/Dialog'
 
 const mapData = new MapData()
 
+
+const egNeighborhood = {
+    [`Matruh`]: ['Al Iskandariyah', 'Al Buhayrah', 'Al Jizah', 'Al Wadi at Jadid'],
+    [`Al Iskandariyah`]: ['Matruh', 'Al Buhayrah'],
+    [`Al Buhayrah`]: ['Al Iskandariyah', 'Matruh', 'Al Jizah', 'Al Minufiyah',
+        'Al Gharbiyah', 'Kafr ash Shaykh'],
+    [`Al Jizah`]: ['Al Qahirah', 'Al Buhayrah', 'Al Minya', 'Al Wadi at Jadid',
+        'Bani Suwayf', 'Al Fayyum', 'Al Bahr al Ahmar', 'As Suways', 'Al Qalyubiyah', 'Al Minufiyah'],
+    [`Al Wadi at Jadid`]: ['Matruh', 'Al Jizah', 'Al Minya', 'Asyut',
+        'Suhaj', 'Qina', 'Aswan'],
+    ['Al Minufiyah']: [`Al Buhayrah`, `Al Jizah`, 'Al Gharbiyah', 'Ad Daqahliyah', 'Al Qalyubiyah'],
+    ['Al Gharbiyah']: ['Al Buhayrah', 'Al Minufiyah', 'Ad Daqahliyah', 'Kafr ash Shaykh'],
+    ['Kafr ash Shaykh']: ['Al Buhayrah', 'Al Gharbiyah', 'Ad Daqahliyah'],
+    ['Al Qahirah']: ['Al Jizah', 'As Suways', 'Al Isma`iliyah', 'Ash Sharqiyah', 'Al Qalyubiyah'],
+    ['Al Minya']: ['Al Jizah', 'Al Wadi at Jadid', 'Bani Suwayf', 'Al Bahr al Ahmar', 'Asyut'],
+    ['Bani Suwayf']: ['Al Jizah', 'Al Minya', 'Al Fayyum', 'Al Bahr al Ahmar'],
+    ['Al Fayyum']: ['Al Jizah', 'Bani Suwayf'],
+    ['Al Bahr al Ahmar']: ['As Suways', `Al Jizah`, 'Bani Suwayf', 'Al Minya', 'Asyut', 'Suhaj', 'Qina', 'Aswan'],
+    ['As Suways']: ['Al Jizah', 'Al Qahirah', 'Al Bahr al Ahmar', 'Al Isma`iliyah', 'Janub Sina', 'Shamal Sina'],
+    ['Al Qalyubiyah']: ['Al Jizah', 'Al Qahirah', 'Al Minufiyah', 'Al Isma`iliyah', 'Ash Sharqiyah', 'Ad Daqahliyah'],
+    ['Asyut']: ['Al Wadi at Jadid', 'Al Minya', 'Al Bahr al Ahmar', 'Suhaj'],
+    ['Suhaj']: ['Al Wadi at Jadid', 'Asyut', 'Al Bahr al Ahmar', 'Qina'],
+    ['Qina']: ['Al Wadi at Jadid', 'Suhaj', 'Al Bahr al Ahmar', 'Aswan'],
+    ['Aswan']: ['Al Wadi at Jadid', 'Qina', 'Al Bahr al Ahmar'],
+    ['Ad Daqahliyah']: ['Al Minufiyah', 'Al Gharbiyah', 'Kafr ash Shaykh', 'Al Qalyubiyah', 'Ash Sharqiyah', 'Dumyat'],
+    ['Al Isma`iliyah']: ['Al Qahirah', 'As Suways', 'Ash Sharqiyah', 'Shamal Sina', 'Bur Sa`id'],
+    ['Ash Sharqiyah']: ['Al Qahirah', 'Al Qalyubiyah', 'Ad Daqahliyah', 'Al Isma`iliyah'],
+    ['Janub Sina']: ['As Suways', 'Shamal Sina'],
+    ['Dumyat']: ['Ad Daqahliyah'],
+    ['Shamal Sina']: ['Al Isma`iliyah', 'Janub Sina', 'As Suways', 'Bur Sa`id'],
+    ['Bur Sa`id']: ['Al Isma`iliyah', 'Shamal Sina'],
+}
+
+
+
 /**
 * Game class have all the logic of the game itself
 * and will send the required data to the board to be displayed
@@ -54,19 +89,19 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
 
             case 'aggressive agent':
                 return new AgressiveAgent(color)
-            
+
             case 'pacifist agent':
                 return new PacifistAgent(color)
-            
+
             case 'greedy agent':
                 return new GreedyAgent(color)
-            
+
             case 'A* agent':
                 return new AStarAgent(color)
 
             case 'real-time A* agent':
                 return new AStarRealAgent(color)
-            
+
             case 'minimax agent':
                 return new MinimaxAgent(color)
             default:
@@ -301,7 +336,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                                 console.log("second city chosen")
                                 let idxFirst = cities.findIndex(city => city.name === firstClickCity.name)
                                 let idxSecond = cities.findIndex(city => city.name === secondClickCity.name)
-                                
+
                                 let attackingArmies = parseInt(dialogValue)
 
                                 cities[idxFirst].armies -= attackingArmies
