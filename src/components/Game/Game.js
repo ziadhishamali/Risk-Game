@@ -18,7 +18,7 @@ import Dialog from '../Dialog/Dialog'
 const mapData = new MapData()
 
 
-const egNeighborhood = {
+const egNeighbourhood = {
     [`Matruh`]: ['Al Iskandariyah', 'Al Buhayrah', 'Al Jizah', 'Al Wadi at Jadid'],
     [`Al Iskandariyah`]: ['Matruh', 'Al Buhayrah'],
     [`Al Buhayrah`]: ['Al Iskandariyah', 'Matruh', 'Al Jizah', 'Al Minufiyah',
@@ -35,22 +35,22 @@ const egNeighborhood = {
     ['Bani Suwayf']: ['Al Jizah', 'Al Minya', 'Al Fayyum', 'Al Bahr al Ahmar'],
     ['Al Fayyum']: ['Al Jizah', 'Bani Suwayf'],
     ['Al Bahr al Ahmar']: ['As Suways', `Al Jizah`, 'Bani Suwayf', 'Al Minya', 'Asyut', 'Suhaj', 'Qina', 'Aswan'],
-    ['As Suways']: ['Al Jizah', 'Al Qahirah', 'Al Bahr al Ahmar', 'Al Isma`iliyah', 'Janub Sina', 'Shamal Sina'],
+    ['As Suways']: ['Al Jizah', 'Al Qahirah', 'Al Bahr al Ahmar', 'Al Isma`iliyah', 'Janub Sina\'', 'Shamal Sina\''],
     ['Al Qalyubiyah']: ['Al Jizah', 'Al Qahirah', 'Al Minufiyah', 'Al Isma`iliyah', 'Ash Sharqiyah', 'Ad Daqahliyah'],
     ['Asyut']: ['Al Wadi at Jadid', 'Al Minya', 'Al Bahr al Ahmar', 'Suhaj'],
     ['Suhaj']: ['Al Wadi at Jadid', 'Asyut', 'Al Bahr al Ahmar', 'Qina'],
     ['Qina']: ['Al Wadi at Jadid', 'Suhaj', 'Al Bahr al Ahmar', 'Aswan'],
     ['Aswan']: ['Al Wadi at Jadid', 'Qina', 'Al Bahr al Ahmar'],
     ['Ad Daqahliyah']: ['Al Minufiyah', 'Al Gharbiyah', 'Kafr ash Shaykh', 'Al Qalyubiyah', 'Ash Sharqiyah', 'Dumyat'],
-    ['Al Isma`iliyah']: ['Al Qahirah', 'As Suways', 'Ash Sharqiyah', 'Shamal Sina', 'Bur Sa`id'],
+    ['Al Isma`iliyah']: ['Al Qahirah', 'As Suways', 'Ash Sharqiyah', 'Shamal Sina\'', 'Bur Sa`id'],
     ['Ash Sharqiyah']: ['Al Qahirah', 'Al Qalyubiyah', 'Ad Daqahliyah', 'Al Isma`iliyah'],
-    ['Janub Sina']: ['As Suways', 'Shamal Sina'],
+    ['Janub Sina\'']: ['As Suways', 'Shamal Sina\''],
     ['Dumyat']: ['Ad Daqahliyah'],
-    ['Shamal Sina']: ['Al Isma`iliyah', 'Janub Sina', 'As Suways', 'Bur Sa`id'],
-    ['Bur Sa`id']: ['Al Isma`iliyah', 'Shamal Sina'],
+    ['Shamal Sina\'']: ['Al Isma`iliyah', 'Janub Sina\'', 'As Suways', 'Bur Sa`id'],
+    ['Bur Sa`id']: ['Al Isma`iliyah', 'Shamal Sina\''],
 }
 
-const usNeighborhood = {
+const usNeighbourhood = {
     [`Massachusetts`]: ['New York', 'Vermont', 'Connecticut', 'Rhode Island', 'New Hampshire'],
     [`Minnesota`]: ['North Dakota', 'South Dakota', 'Iowa', 'Wisconsin'],
     [`Montana`]: ['Idaho', 'Wyoming', 'North Dakota', 'South Dakota'],
@@ -158,7 +158,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
             case 'minimax agent':
                 return new MinimaxAgent(color, setCities, setMessage)
             default:
-                return new HumanAgent(color)
+                return new HumanAgent(color, setCities)
         }
     }
 
@@ -217,8 +217,8 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                 let element = elements[i]
 
                 let name = element.getAttribute('name')
-                
-                if (name === 'District of Columbia') {
+
+                if (name === 'District of Columbia' || name === "" || name == "Luxor") {
                     continue;
                 }
 
@@ -269,7 +269,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
 
             let name = element.getAttribute('name')
 
-            if (name === 'District of Columbia') {
+            if (name === 'District of Columbia' || name === "" || name === "Luxor") {
                 continue;
             }
 
@@ -437,7 +437,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
     return (
         <div className="game-wrapper">
             <Board isEgypt={isEgypt} turn={numTurns} cities={cities} currentCity={currentCity} message={message} />
-            <Controller cities={cities} isStart={isReadyToStart} player1={player1} player1Agent={player1Agent} player2Agent={player2Agent} player2={player2} turn={numTurns} setTurn={setNumTurns} setMessage={setMessage} />
+            <Controller cities={cities} isStart={isReadyToStart} player1={player1} player1Agent={player1Agent} player2Agent={player2Agent} player2={player2} turn={numTurns} setTurn={setNumTurns} setMessage={setMessage} neighbours={egNeighbourhood} />
             <Dialog isOpen={showDialog} onClose={submitDialog} extraArmies={!turnStep ? extraArmies : firstClickCity && firstClickCity.armies - 1} message={dialogMessage} />
         </div>
     )

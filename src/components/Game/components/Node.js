@@ -10,6 +10,7 @@ class Node {
         this.name = name
     }
     neighbours = []
+    inside = []
 }
  
 export default Node;

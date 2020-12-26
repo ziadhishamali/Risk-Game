@@ -7,7 +7,17 @@ class PassiveAgent {
 
     deploy = (map, armies) => {
         // TODO: fill in the deploy logic
-        return "deploying now"
+        let min = Number.MAX_SAFE_INTEGER;
+        let target = map.filter(city => {
+            if (city.owner === 1 && city.armies < min) {
+                min = city.armies;
+                return true
+            }
+            return false
+        })[0]
+        console.log("chosen city to deploy to", target);
+        target.armies += armies
+        return `deploying now to ${target.name}`
     }
 
     attack = (map) => {

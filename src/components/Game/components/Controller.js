@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, turn, setTurn, cities, setMessage }) => {
+const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, turn, setTurn, cities, setMessage, neighbours }) => {
     const sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -27,8 +27,8 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
             // setMessage(message)
             sleep(2000).then(() => {
                 console.log(`player 1: attacking ...`)
-                message = player1.attack(cities)
-                setMessage(message)
+                message = player1.attack(cities, neighbours, 0)
+                // setMessage(message)
                 sleep(2000).then(() => {
                     setTurn(turn + 1)
                 })
@@ -39,8 +39,8 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
             // setMessage(message)
             sleep(2000).then(() => {
                 console.log(`player 2: attacking ...`)
-                message = player2.attack(cities)
-                setMessage(message)
+                message = player2.attack(cities, neighbours , 1)
+                // setMessage(message)
                 sleep(2000).then(() => {
                     setTurn(turn + 1)
                 })
