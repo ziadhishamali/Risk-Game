@@ -23,8 +23,8 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
         let extraArmies = getExtraArmies()
         if (turn % 2 === 0 && player1Agent !== 'human agent') {
             console.log(`player 1: deploying ${extraArmies} armies ...`)
-            let message = player1.deploy()
-            setMessage(message)
+            let message = player1.deploy(cities, extraArmies)
+            // setMessage(message)
             sleep(2000).then(() => {
                 console.log(`player 1: attacking ...`)
                 message = player1.attack(cities)
@@ -35,8 +35,8 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
             })
         } else if (turn % 2 === 1 && player2Agent !== 'human agent') {
             console.log(`player 2: deploying ${extraArmies} armies ...`)
-            let message = player2.deploy()
-            setMessage(message)
+            let message = player2.deploy(cities, extraArmies)
+            // setMessage(message)
             sleep(2000).then(() => {
                 console.log(`player 2: attacking ...`)
                 message = player2.attack(cities)

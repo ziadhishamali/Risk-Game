@@ -138,25 +138,25 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
     const getAgent = (agentName, color) => {
         switch (agentName) {
             case 'passive agent':
-                return new PassiveAgent(color)
+                return new PassiveAgent(color, setCities, setMessage)
 
             case 'aggressive agent':
-                return new AgressiveAgent(color)
+                return new AgressiveAgent(color, setCities, setMessage)
 
             case 'pacifist agent':
-                return new PacifistAgent(color)
+                return new PacifistAgent(color, setCities, setMessage)
 
             case 'greedy agent':
-                return new GreedyAgent(color)
+                return new GreedyAgent(color, setCities, setMessage)
 
             case 'A* agent':
-                return new AStarAgent(color)
+                return new AStarAgent(color, setCities, setMessage)
 
             case 'real-time A* agent':
-                return new AStarRealAgent(color)
+                return new AStarRealAgent(color, setCities, setMessage)
 
             case 'minimax agent':
-                return new MinimaxAgent(color)
+                return new MinimaxAgent(color, setCities, setMessage)
             default:
                 return new HumanAgent(color)
         }
@@ -253,8 +253,8 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
 
     useEffect(() => {
         // construct the two players
-        setPlayer1(getAgent(player1Agent, 'red'))
-        setPlayer2(getAgent(player2Agent, 'blue'))
+        setPlayer1(getAgent(player1Agent, 0))
+        setPlayer2(getAgent(player2Agent, 1))
 
         let elements = window.document.getElementsByTagName("path")
 
