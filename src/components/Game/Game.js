@@ -311,9 +311,9 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
 
                                 console.log(`attacking = ${attackingArmies}, defending = ${defendingArmies}`)
                                 if (attackingArmies > defendingArmies) {
-                                    cities[idxSecond].owner = 0
+                                    cities[idxSecond].owner = numTurns % 2
                                 } else {
-                                    cities[idxFirst].owner = 1
+                                    cities[idxFirst].owner = (numTurns % 2 === 1 ? 0 : 1)
                                 }
 
                                 setFirstClickCity(undefined)
