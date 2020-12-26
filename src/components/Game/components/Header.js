@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-export default function Header({ turn, numTurns, isEgypt, currentCity }) {
+export default function Header({ turn, isEgypt, currentCity, message }) {
 
     const [cc, setCC] = useState(currentCity);
 
     useEffect(() => {
-        console.log(currentCity);
+        // console.log(currentCity);
         setCC(currentCity)
     }, [currentCity])
 
@@ -21,17 +21,23 @@ export default function Header({ turn, numTurns, isEgypt, currentCity }) {
                 <h1>{playerName()}'s Turn</h1>
             </div>
 
+            <div className="board-header-item no-of-turns">
+                <h2>{message}</h2>
+            </div>
 
             <div className="board-header-item no-of-turns">
                 <h1>Num of turns</h1>
-                <h2>{numTurns}</h2>
+                <h2>{turn}</h2>
             </div>
 
-            {currentCity && currentCity.name && <div className="board-header-item city-details">
-                <h1>{`City: ${currentCity.name}`}</h1>
-                <h1>{`Occupied by: ${playerName(currentCity.owner)}`}</h1>
-                <h1>{`Army: ${currentCity.armies}`}</h1>
-            </div>}
+            <div className="city-details-container">
+                {currentCity && currentCity.name && <div className="board-header-item city-details">
+                    <h1>{`City: ${currentCity.name}`}</h1>
+                    <h1>{`Occupied by: ${playerName(currentCity.owner)}`}</h1>
+                    <h1>{`Army: ${currentCity.armies}`}</h1>
+                </div>}
+            </div>
+            
         </div>
     )
 }

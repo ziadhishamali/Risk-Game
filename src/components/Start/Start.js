@@ -4,7 +4,7 @@ import './Start.css'
 const Start = ({ submitStart }) => {
     const [isEgypt, setIsEgypt] = useState(true)
     const [mode, setMode] = useState("simulation")
-	const [player1Agent, setPlayer1Agent] = useState("human agent")
+	const [player1Agent, setPlayer1Agent] = useState("passive agent")
     const [player2Agent, setPlayer2Agent] = useState("passive agent")
 
     const options = [
@@ -21,6 +21,10 @@ const Start = ({ submitStart }) => {
         let arr = options.map((option, idx) => (
             <option key={index + '-' + idx}>{option}</option>
         ))
+
+        if (mode !== "simulation") {
+            arr = [<option key={index + '-' + arr.length}>human agent</option>, ...arr]
+        }
 
         return arr
     }
@@ -49,7 +53,7 @@ const Start = ({ submitStart }) => {
                                 {renderOptions(1)}
                             </select>
                         ) : (
-                            <h4>Player agent</h4>
+                            <h4>Human agent</h4>
                         )
                     }
                     <h3>Player 1 agent:</h3>

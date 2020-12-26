@@ -4,9 +4,10 @@
  * @param {armies} param1 num of armies
  */
 class Node {
-    constructor(owner, armies) {
+    constructor(owner, armies, name) {
         this.owner = owner
         this.armies = armies
+        this.name = name
     }
     neighbours = []
 }

@@ -71,10 +71,10 @@
     padding: 10px;
     display: flex;
     /* flex-direction: column; */
-    flex-flow: column wrap;
+    flex-flow: row wrap;
     background-color: lightslategray;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
     border-bottom-width: 2;
     border-bottom-color: white;
     position: relative;
@@ -93,13 +93,12 @@
     color: #474747;
 }
 
-.no-of-turns {
-    position: absolute;
-    right: 20px;
-    top: 20px;
+.city-details-container {
+    width: 100%;
 }
 
 .city-details {
+    width: fit-content;
     flex-direction: column;
     align-items: flex-start;
 }
@@ -133,7 +132,7 @@ path {
     position: relative;
     transform-origin: center center;
     transform-box: fill-box;
-    transition: 1s;
+    transition: 0.5s;
 }
 
 path:hover {
@@ -142,6 +141,8 @@ path:hover {
     opacity: 0.8;
     /* filter: url(#dropshadow); */
     -webkit-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -moz-transform: scale(1.05);
     transform: scale(1.05);
     cursor: pointer;
 }
