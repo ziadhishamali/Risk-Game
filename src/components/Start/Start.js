@@ -56,7 +56,7 @@ const Start = ({ submitStart }) => {
                             <h4>Human agent</h4>
                         )
                     }
-                    <h3>Player 1 agent:</h3>
+                    <h3>Player 2 agent:</h3>
                     <select value={player2Agent} onChange={(e) => setPlayer2Agent(e.target.value)}>
                         {renderOptions(2)}
                     </select>

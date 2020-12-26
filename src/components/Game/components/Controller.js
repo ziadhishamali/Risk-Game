@@ -1,14 +1,21 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, turn, setTurn, cities, setMessage, neighbours }) => {
+const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, turn, setTurn, cities, setCities, setMessage, neighbours }) => {
     const sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
+    const [isPlayer1Playing, setIsPlayer1Playing] = useState(false)
+    const [isPlayer2Playing, setIsPlayer2Playing] = useState(false)
+
     useEffect(() => {
-        // console.log({ isStart, player1Agent, player2Agent, player1, player2, turn, setTurn, cities })
+        console.log({ turn })
 
         if (!isStart) {
+            return
+        }
+
+        if (isPlayer1Playing || isPlayer2Playing) {
             return
         }
 
@@ -22,31 +29,39 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
 
         let extraArmies = getExtraArmies()
         if (turn % 2 === 0 && player1Agent !== 'human agent') {
-            console.log(`player 1: deploying ${extraArmies} armies ...`)
-            let message = player1.deploy(cities, extraArmies)
-            // setMessage(message)
+            setIsPlayer1Playing(true)
+            // console.log(`player 1: deploying ${extraArmies} armies ...`)
+            let [message, citiesNew] = player1.deploy(cities, extraArmies, neighbours)
+            setCities(citiesNew)
+            setMessage(message)
             sleep(2000).then(() => {
-                console.log(`player 1: attacking ...`)
-                message = player1.attack(cities, neighbours, 0)
-                // setMessage(message)
+                // console.log(`player 1: attacking ...`)
+                [message, citiesNew] = player1.attack(cities, neighbours, 0)
+                setMessage(message)
                 sleep(2000).then(() => {
                     setTurn(turn + 1)
+                    setCities(citiesNew)
+                    setIsPlayer1Playing(false)
                 })
             })
         } else if (turn % 2 === 1 && player2Agent !== 'human agent') {
-            console.log(`player 2: deploying ${extraArmies} armies ...`)
-            let message = player2.deploy(cities, extraArmies)
-            // setMessage(message)
+            setIsPlayer2Playing(true)
+            // console.log(`player 2: deploying ${extraArmies} armies ...`)
+            let [message, citiesNew] = player2.deploy(cities, extraArmies, neighbours)
+            setCities(citiesNew)
+            setMessage(message)
             sleep(2000).then(() => {
-                console.log(`player 2: attacking ...`)
-                message = player2.attack(cities, neighbours , 1)
-                // setMessage(message)
+                // console.log(`player 2: attacking ...`)
+                [message, citiesNew] = player2.attack(cities, neighbours , 1)
+                setMessage(message)
                 sleep(2000).then(() => {
                     setTurn(turn + 1)
+                    setCities(citiesNew)
+                    setIsPlayer2Playing(false)
                 })
             })
         }
-    }, [cities, isStart, player1, player1Agent, player2, player2Agent, setMessage, setTurn, turn])
+    }, [cities, isPlayer1Playing, isPlayer2Playing, isStart, neighbours, player1, player1Agent, player2, player2Agent, setCities, setMessage, setTurn, turn])
 
     return (
         ""

@@ -229,8 +229,8 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                     element.style.fill = '#c60203' // red
                 }
 
+                element.addEventListener('mouseover', hoverListener)
                 if (player1Agent === 'human agent' || player2Agent === 'human agent') {
-                    element.addEventListener('mouseover', hoverListener)
                     element.addEventListener('click', clickListener)
                 }
 
@@ -246,7 +246,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
             for (let i = 0; i < elements.length; i++) {
                 let element = elements[i]
                 element.removeEventListener('click', clickListener)
-                element.removeEventListener('mouseover', hoverListener)
+                // element.removeEventListener('mouseover', hoverListener)
             }
         };
     }, [cities, clickListener, firstClickCity, hoverListener, isListenersAdded, numTurns, player1Agent, player2Agent, secondClickCity])
@@ -437,7 +437,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
     return (
         <div className="game-wrapper">
             <Board isEgypt={isEgypt} turn={numTurns} cities={cities} currentCity={currentCity} message={message} />
-            <Controller cities={cities} isStart={isReadyToStart} player1={player1} player1Agent={player1Agent} player2Agent={player2Agent} player2={player2} turn={numTurns} setTurn={setNumTurns} setMessage={setMessage} neighbours={egNeighbourhood} />
+            <Controller cities={cities} setCities={setCities} isStart={isReadyToStart} player1={player1} player1Agent={player1Agent} player2Agent={player2Agent} player2={player2} turn={numTurns} setTurn={setNumTurns} setMessage={setMessage} neighbours={isEgypt ? egNeighbourhood : usNeighbourhood} />
             <Dialog isOpen={showDialog} onClose={submitDialog} extraArmies={!turnStep ? extraArmies : firstClickCity && firstClickCity.armies - 1} message={dialogMessage} />
         </div>
     )

@@ -9,7 +9,7 @@ class AgressiveAgent {
         // TODO: fill in the deploy logic
         let max = 0;
         let target = map.filter(city => {
-            if (city.owner === 1 && city.armies > max) {
+            if (city.owner === this.color && city.armies > max) {
                 max = city.armies;
                 return true
             }
@@ -17,7 +17,7 @@ class AgressiveAgent {
         })[0]
         console.log("chosen city to deploy to", target);
         target.armies += armies
-        return `deploying now to ${target.name}`
+        return [`deploying now to ${target.name}`, target]
     }
 
     attack = (map, neighbours, owner) => {
@@ -68,13 +68,11 @@ class AgressiveAgent {
                 map[idxFirst].owner = (owner === 1 ? 0 : 1)
             }
 
-            this.setCities(map)
-
-            return `attacking ${map[idxSecond].name} with ${attackingArmies} armies`
+            return [`attacking ${map[idxSecond].name} with ${attackingArmies} armies`, map]
 
         }
 
-        return `can't attack`
+        return [`can't attack`, map]
     }
 }
 
