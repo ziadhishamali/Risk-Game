@@ -50,6 +50,59 @@ const egNeighborhood = {
     ['Bur Sa`id']: ['Al Isma`iliyah', 'Shamal Sina'],
 }
 
+const usNeighborhood = {
+    [`Massachusetts`]: ['New York', 'Vermont', 'Connecticut', 'Rhode Island', 'New Hampshire'],
+    [`Minnesota`]: ['North Dakota', 'South Dakota', 'Iowa', 'Wisconsin'],
+    [`Montana`]: ['Idaho', 'Wyoming', 'North Dakota', 'South Dakota'],
+    [`North Dakota`]: ['Montana', 'South Dakota', 'Minnesota'],
+    [`Hawaii`]: ['Alaska', 'Arizona', 'New Mexico', 'Texas'],
+    ['Idaho']: [`Washington`, `Oregon`, 'Montana', 'Wyoming', 'Utah', 'Nevada'],
+    ['Washington']: ['Oregon', 'Idaho'],
+    ['Arizona']: ['California', 'Nevada', 'Utah', 'New Mexico', 'Hawaii', 'Alaska'],
+    ['California']: ['Nevada', 'Arizona', 'Alaska', 'Oregon'],
+    ['Colorado']: ['Utah', 'New Mexico', 'Kensas', 'Oklahoma', 'Nebraska', 'Wyoming'],
+    ['Nevada']: ['California', 'Oregon', 'Idaho', 'Utah', 'Arizona'],
+    ['New Mexico']: ['Arizona', 'Texas', 'Colorado', 'Oklahoma', 'Hawaii'],
+    ['Oregon']: ['Washington', `Idaho`, 'California', 'Nevada'],
+    ['Utah']: ['Nevada', 'Arizona', 'Colorado', 'Wyoming', 'Idaho'],
+    ['Wyoming']: ['Utah', 'Colorado', 'Nebraska', 'South Dakota', 'Montana', 'Idaho'],
+    ['Arkansas']: ['Oklahoma', 'Missouri', 'Louisiana', 'Mississippi', 'Texas', 'Tennessee'],
+    ['Iowa']: ['Nebraska', 'South Dakota', 'Minnesota', 'Illinois', 'Missouri', 'Wisconsin'],
+    ['Kansas']: ['Colorado', 'Nebraska', 'Missouri', 'Oklahoma'],
+    ['Missouri']: ['Kensas', 'Iowa', 'Illinois', 'Kentucky', 'Arkansas', 'Oklahoma', 'Nebraska'],
+    ['Nebraska']: ['Missouri', 'South Dakota', 'Iowa', 'Kansas', 'Colorado', 'Wyoming'],
+    ['Oklahoma']: ['Texas', 'New Mexico', 'Colorado', 'Kansas', 'Missouri', 'Arkansas'],
+    ['South Dakota']: ['Wyoming', 'Nebraska', 'Minnesota', 'Iowa'],
+    ['Louisiana']: ['Texas', 'Arkansas', 'Mississippi'],
+    ['Texas']: ['New Mexico', 'Oklahoma', 'Arkansas', 'Louisiana', 'Hawaii'],
+    ['Connecticut']: ['New York', 'Massachusetts', 'Rhode Island'],
+    ['New Hampshire']: ['Vermont', 'Massachusetts', 'Maine'],
+    ['Rhode Island']: ['Connecticut', 'Massachusetts'],
+    ['Vermont']: ['New York', 'New Hampshire', 'Massachusetts'],
+    ['Alabama']: ['Mississippi', 'Florida', 'Georgia', 'Tennessee'],
+    ['Florida']: ['Georgia', 'Alabama'],
+    ['Georgia']: ['Florida', 'Alabama', 'Tennessee', 'North Carolina', 'South Carolina'],
+    ['Mississippi']: ['Alabama', 'Arkansas', 'Louisiana', 'Tennessee'],
+    ['South Carolina']: ['North Carolina', 'Georgia'],
+    ['Illinois']: ['Iowa', 'Wisconsin', 'Indiana', 'Missouri', 'Kentucky'],
+    ['Indiana']: ['Michigan', 'Ohio', 'Kentucky', 'illinois'],
+    ['Kentucky']: ['Indiana', 'Illinois', 'Missouri', 'Tennessee', 'Viginia', 'West Virginia', 'Ohio'],
+    ['North Carolina']: ['South Carolina', 'Tennessee', 'Viginia', 'Georgia'],
+    ['Ohio']: ['Michigan', 'Indiana', 'Pennsylvania', 'West Virginia', 'Kentucky'],
+    ['Tennessee']: ['Kentucky', 'Missouri', 'Arkansas', 'Mississippi', 'Alabama', 'Georgia', 'North Carolina', 'Virginia'],
+    ['Virginia']: ['Maryland', 'West Virginia', 'North Carolina', 'Kentucky', 'Tennessee'],
+    ['Wisconsin']: ['Minnesota', 'Iowa', 'Illinois', 'Michigan'],
+    ['West Virginia']: ['Ohio', 'Pennsylvania', 'Kentucky', 'Virginia', 'Maryland'],
+    ['Delaware']: ['Maryland', 'New Jersey', 'Pennsylvania'],
+    ['Maryland']: ['Pennsylvania', 'Daleware', 'Virginia', 'West Virginia'],
+    ['New Jersey']: ['Pennsylvania', 'New York', 'Daleware'],
+    ['New York']: ['Vermont', 'Pennsylvania', 'New Jersy', 'Connecticut', 'Massachusetts'],
+    ['Pennsylvania']: ['New York', 'New Jersey', 'Ohio', 'West Virginia', 'Maryland', 'Daleware'],
+    ['Maine']: ['New Hampshire'],
+    ['Michigan']: ['Wisconsin', 'Indiana', 'Ohio'],
+    ['Alaska']: ['Hawaii', 'California', 'Arizona'],
+}
+
 
 
 /**
@@ -159,11 +212,18 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
         if (cities.length) {
             // add listeners if there is a human agent playing
             let elements = window.document.getElementsByTagName("path")
+            let j = 0
             for (let i = 0; i < elements.length; i++) {
                 let element = elements[i]
 
+                let name = element.getAttribute('name')
+                
+                if (name === 'District of Columbia') {
+                    continue;
+                }
+
                 // styling the map svg according to the owner
-                if (cities[i].owner === 1) {
+                if (cities[j].owner === 1) {
                     element.style.fill = '#1c92d2' // blue
                 } else {
                     element.style.fill = '#c60203' // red
@@ -173,6 +233,8 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                     element.addEventListener('mouseover', hoverListener)
                     element.addEventListener('click', clickListener)
                 }
+
+                j++
             }
 
             setIsListenersAdded(true)
@@ -205,6 +267,12 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
         for (let i = 0; i < elements.length; i++) {
             let element = elements[i]
 
+            let name = element.getAttribute('name')
+
+            if (name === 'District of Columbia') {
+                continue;
+            }
+
             // specify which player to own current city
             let owner = 0
             if (total[0] === limit) {
@@ -216,7 +284,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
             }
             total[owner]++
 
-            let node = new Node(owner, 1, element.getAttribute('name'))
+            let node = new Node(owner, 1, name)
             counts[owner]--
 
             // add the node to cities
@@ -240,7 +308,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
             sum[cities[i].owner] += cities[i].armies
         }
 
-        // console.log("cities: ", cities, sum)
+        console.log("cities: ", cities, sum)
         setCities(cities)
     }, [isEgypt, player1Agent, player2Agent])
 
