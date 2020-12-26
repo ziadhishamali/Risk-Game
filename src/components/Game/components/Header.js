@@ -11,7 +11,7 @@ export default function Header({ turn, isEgypt, currentCity, message }) {
 
     let playerName = (owner) => {
         let x = owner || turn;
-        return isEgypt ? x % 2 === 0 ? "El Sisi red" : "El Sisi blue" : x % 2 === 0 ? "Trump" : "Biden";
+        return isEgypt ? x % 2 === 0 ? "player red" : "player blue" : x % 2 === 0 ? "Trump" : "Biden";
     }
 
     return (

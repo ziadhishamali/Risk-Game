@@ -266,6 +266,8 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                         setShowDialog(false)
                         setDialogDone(false)
                     }
+                } else {
+                    setFirstClickCity(undefined)
                 }
             }
 
@@ -321,6 +323,8 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                                 setTurnStep(0)
                             }
                         }
+                    } else {
+                        setFirstClickCity(undefined)
                     }
                 }
             }
