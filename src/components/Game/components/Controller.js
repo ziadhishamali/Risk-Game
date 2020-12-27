@@ -9,7 +9,7 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
     const [isPlayer2Playing, setIsPlayer2Playing] = useState(false)
 
     useEffect(() => {
-        console.log({ turn })
+        console.log({ turn, isStart })
 
         if (!isStart) {
             return

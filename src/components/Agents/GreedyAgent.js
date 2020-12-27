@@ -9,6 +9,20 @@ class GreedyAgent {
 
     deploy = (map, armies, neighbours) => {
         // TODO: fill in the deploy logic
+        for (let i = 0; i < map.length; i++) {
+            let city = map[i]
+
+            city.neighbours = neighbours[city.name].map(citi => {
+                return map.filter(ct => {
+                    return ct.name === citi
+                })[0]
+            });
+            city.inside = city.neighbours.find((x) => {
+                return x.owner !== city.owner
+            }) === undefined
+        }
+        
+
         // Generate next level of states
         let children = giveBirth(map, this.color, armies, neighbours)
 

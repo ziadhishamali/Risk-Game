@@ -60,7 +60,7 @@ const usNeighbourhood = {
     ['Washington']: ['Oregon', 'Idaho'],
     ['Arizona']: ['California', 'Nevada', 'Utah', 'New Mexico', 'Hawaii', 'Alaska'],
     ['California']: ['Nevada', 'Arizona', 'Alaska', 'Oregon'],
-    ['Colorado']: ['Utah', 'New Mexico', 'Kensas', 'Oklahoma', 'Nebraska', 'Wyoming'],
+    ['Colorado']: ['Utah', 'New Mexico', 'Kansas', 'Oklahoma', 'Nebraska', 'Wyoming'],
     ['Nevada']: ['California', 'Oregon', 'Idaho', 'Utah', 'Arizona'],
     ['New Mexico']: ['Arizona', 'Texas', 'Colorado', 'Oklahoma', 'Hawaii'],
     ['Oregon']: ['Washington', `Idaho`, 'California', 'Nevada'],
@@ -69,7 +69,7 @@ const usNeighbourhood = {
     ['Arkansas']: ['Oklahoma', 'Missouri', 'Louisiana', 'Mississippi', 'Texas', 'Tennessee'],
     ['Iowa']: ['Nebraska', 'South Dakota', 'Minnesota', 'Illinois', 'Missouri', 'Wisconsin'],
     ['Kansas']: ['Colorado', 'Nebraska', 'Missouri', 'Oklahoma'],
-    ['Missouri']: ['Kensas', 'Iowa', 'Illinois', 'Kentucky', 'Arkansas', 'Oklahoma', 'Nebraska'],
+    ['Missouri']: ['Kansas', 'Iowa', 'Illinois', 'Kentucky', 'Arkansas', 'Oklahoma', 'Nebraska'],
     ['Nebraska']: ['Missouri', 'South Dakota', 'Iowa', 'Kansas', 'Colorado', 'Wyoming'],
     ['Oklahoma']: ['Texas', 'New Mexico', 'Colorado', 'Kansas', 'Missouri', 'Arkansas'],
     ['South Dakota']: ['Wyoming', 'Nebraska', 'Minnesota', 'Iowa'],
@@ -85,19 +85,19 @@ const usNeighbourhood = {
     ['Mississippi']: ['Alabama', 'Arkansas', 'Louisiana', 'Tennessee'],
     ['South Carolina']: ['North Carolina', 'Georgia'],
     ['Illinois']: ['Iowa', 'Wisconsin', 'Indiana', 'Missouri', 'Kentucky'],
-    ['Indiana']: ['Michigan', 'Ohio', 'Kentucky', 'illinois'],
-    ['Kentucky']: ['Indiana', 'Illinois', 'Missouri', 'Tennessee', 'Viginia', 'West Virginia', 'Ohio'],
-    ['North Carolina']: ['South Carolina', 'Tennessee', 'Viginia', 'Georgia'],
+    ['Indiana']: ['Michigan', 'Ohio', 'Kentucky', 'Illinois'],
+    ['Kentucky']: ['Indiana', 'Illinois', 'Missouri', 'Tennessee', 'Virginia', 'West Virginia', 'Ohio'],
+    ['North Carolina']: ['South Carolina', 'Tennessee', 'Virginia', 'Georgia'],
     ['Ohio']: ['Michigan', 'Indiana', 'Pennsylvania', 'West Virginia', 'Kentucky'],
     ['Tennessee']: ['Kentucky', 'Missouri', 'Arkansas', 'Mississippi', 'Alabama', 'Georgia', 'North Carolina', 'Virginia'],
     ['Virginia']: ['Maryland', 'West Virginia', 'North Carolina', 'Kentucky', 'Tennessee'],
     ['Wisconsin']: ['Minnesota', 'Iowa', 'Illinois', 'Michigan'],
     ['West Virginia']: ['Ohio', 'Pennsylvania', 'Kentucky', 'Virginia', 'Maryland'],
     ['Delaware']: ['Maryland', 'New Jersey', 'Pennsylvania'],
-    ['Maryland']: ['Pennsylvania', 'Daleware', 'Virginia', 'West Virginia'],
-    ['New Jersey']: ['Pennsylvania', 'New York', 'Daleware'],
-    ['New York']: ['Vermont', 'Pennsylvania', 'New Jersy', 'Connecticut', 'Massachusetts'],
-    ['Pennsylvania']: ['New York', 'New Jersey', 'Ohio', 'West Virginia', 'Maryland', 'Daleware'],
+    ['Maryland']: ['Pennsylvania', 'Delaware', 'Virginia', 'West Virginia'],
+    ['New Jersey']: ['Pennsylvania', 'New York', 'Delaware'],
+    ['New York']: ['Vermont', 'Pennsylvania', 'New Jersey', 'Connecticut', 'Massachusetts'],
+    ['Pennsylvania']: ['New York', 'New Jersey', 'Ohio', 'West Virginia', 'Maryland', 'Delaware'],
     ['Maine']: ['New Hampshire'],
     ['Michigan']: ['Wisconsin', 'Indiana', 'Ohio'],
     ['Alaska']: ['Hawaii', 'California', 'Arizona'],
@@ -210,6 +210,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
         }*/
 
         if (cities.length) {
+            // console.log('here')
             // add listeners if there is a human agent playing
             let elements = window.document.getElementsByTagName("path")
             let j = 0
@@ -238,7 +239,9 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
             }
 
             setIsListenersAdded(true)
-            setIsReadyToStart(true)
+            if (!isReadyToStart) {
+                setIsReadyToStart(true)
+            }
         }
         // Remove event listener on cleanup
         return () => {
@@ -436,7 +439,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
 
     return (
         <div className="game-wrapper">
-            <Board isEgypt={isEgypt} turn={numTurns} cities={cities} currentCity={currentCity} message={message} />
+            <Board isEgypt={isEgypt} turn={numTurns} cities={cities} currentCity={currentCity} message={message} isReadyToStart={isReadyToStart} setIsReadyToStart={setIsReadyToStart} />
             <Controller cities={cities} setCities={setCities} isStart={isReadyToStart} player1={player1} player1Agent={player1Agent} player2Agent={player2Agent} player2={player2} turn={numTurns} setTurn={setNumTurns} setMessage={setMessage} neighbours={isEgypt ? egNeighbourhood : usNeighbourhood} />
             <Dialog isOpen={showDialog} onClose={submitDialog} extraArmies={!turnStep ? extraArmies : firstClickCity && firstClickCity.armies - 1} message={dialogMessage} />
         </div>

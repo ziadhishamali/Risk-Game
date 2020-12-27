@@ -1,3 +1,5 @@
+import { calculateHeuristic, giveBirth, calculateBonus, isGoalState } from './components/Helper'
+
 class MinimaxAgent {
     constructor(color, setCities, setMessage) {
         this.color = color
@@ -5,14 +7,100 @@ class MinimaxAgent {
         this.setMessage = setMessage
     }
 
-    deploy = (map, armies) => {
+    deploy = (map, armies, neighbours) => {
         // TODO: fill in the deploy logic
-        return "deploying now"
+        for (let i = 0; i < map.length; i++) {
+            let city = map[i]
+
+            city.neighbours = neighbours[city.name].map(citi => {
+                return map.filter(ct => {
+                    return ct.name === citi
+                })[0]
+            });
+            city.inside = city.neighbours.find((x) => {
+                return x.owner !== city.owner
+            }) === undefined
+        }
+
+        // Generate next level of states
+        let children = giveBirth(map, this.color, armies)
+
+        for (let i = 0; i < children.length; i++) {
+            let child = children[i]
+            let output = this.minmax(child["state"], armies, 1, -999999, 999999, true, child)
+            this.newMap = output[1]
+        }
+
+        return [`player ${this.color + 1} is deploying ${armies} armies ...`, this.newMap["parent"]]
+    }
+
+    minmax = (state, armies, depth, alpha, beta, isMaximumTurn, toReturn) => {
+        // Check for termination
+        if (depth === 0 || isGoalState(state, this.color)) {
+            let heuristic = calculateHeuristic(state, this.color)
+            return [heuristic, toReturn]
+        }
+
+        //This player turn
+        if (isMaximumTurn) {
+            let maximumHeuristic = [-999999, null]
+            let nextStates = giveBirth(state, this.color, armies)
+
+            for (let i = 0; i < nextStates.length; i++) {
+                let nextState = nextStates[i]
+                let newArmies = calculateBonus(nextState["state"], this.color)
+                let nextStateResult = this.minmax(nextState["state"], newArmies, depth - 1, alpha, beta, false, toReturn)
+
+                // Compare for maximum heuristic
+                if (nextStateResult[0] > maximumHeuristic[0]) {
+                    maximumHeuristic = nextStateResult
+                }
+
+                // Update alpha
+                if (nextStateResult[0] > alpha)
+                    alpha = nextStateResult[0]
+
+                // Check for pruning chance
+                if (alpha >= beta) {
+                    // No hope of a better results
+                    break
+                }
+            }
+
+            return [maximumHeuristic[0], toReturn]
+        } else { // Opponent turn
+            let minimumHeuristic = [999999, null]
+            let nextStates = giveBirth(state, this.color, armies)
+
+            for (let i = 0; i < nextStates.length; i++) {
+                let nextState = nextStates[i]
+                let newArmies = calculateBonus(nextState["state"], this.color)
+                let nextStateResult = this.minmax(nextState["state"], newArmies, depth-1, alpha, beta, true, toReturn)
+
+                // Compare for minimum heuristic
+                if (nextStateResult[0] < minimumHeuristic[0]) {
+                    minimumHeuristic = nextStateResult
+                }
+
+                // Update beta
+                if (nextStateResult[0] < beta) {
+                    beta = nextStateResult[0]
+                }
+
+                // Check for pruning chance
+                if (alpha >= beta) {
+                    // No hope of a better results
+                    break
+                }
+            }
+
+            return (minimumHeuristic[0], toReturn)
+        }
     }
 
     attack = (map) => {
         // TODO: fill in the attack logic
-        return "attacking now"
+        return [`player ${this.color + 1} is attacking ...`, this.newMap["state"]]
     }
 }
 

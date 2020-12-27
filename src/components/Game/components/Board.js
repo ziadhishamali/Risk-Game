@@ -13,10 +13,10 @@ import Header from './Header';
  * @param {isEgypt} param2 which map Egypt or USA
  * @param {cities} param3 the cities of the map for displaying nodes on the map
  */
-const Board = ({ turn, isEgypt, cities, currentCity, message }) => {
+const Board = ({ turn, isEgypt, cities, currentCity, message, isReadyToStart, setIsReadyToStart }) => {
     return (
         <div className="board-wrapper">
-            <Header turn={turn} isEgypt={isEgypt} cities={cities} currentCity={currentCity} message={message} />
+            <Header turn={turn} isEgypt={isEgypt} cities={cities} currentCity={currentCity} message={message} isReadyToStart={isReadyToStart} setIsReadyToStart={setIsReadyToStart} />
             <div className="board-container">
                 {
                     isEgypt ? <EgyptMap className="board-image" /> : <UsaMap className="board-image" />

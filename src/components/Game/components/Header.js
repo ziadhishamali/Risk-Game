@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function Header({ turn, isEgypt, currentCity, message }) {
+export default function Header({ turn, isEgypt, currentCity, message, isReadyToStart, setIsReadyToStart }) {
 
     const [cc, setCC] = useState(currentCity);
 
@@ -37,6 +37,8 @@ export default function Header({ turn, isEgypt, currentCity, message }) {
                     <h1>{`Army: ${currentCity.armies}`}</h1>
                 </div>}
             </div>
+
+            {/*<button onClick={() => setIsReadyToStart(!isReadyToStart)}>{isReadyToStart ? 'Pause' : 'Resume'}</button>*/}
             
         </div>
     )

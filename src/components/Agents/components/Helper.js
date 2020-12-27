@@ -65,9 +65,9 @@ export const giveBirth = (map, color, armies, neighbours) => {
         if (city.owner === color) { // We can deploy
             // let offspring = [...map] // Copy the data to keep the original map un-touched
             let offspring = cloneDeep(map)
-            console.log(`offspring before ${offspring[j].armies}`)
+            // console.log(`offspring before ${offspring[j].armies}`)
             offspring[j].armies += armies
-            console.log(`offspring after ${offspring[j].armies}`)
+            // console.log(`offspring after ${offspring[j].armies}`)
             deploymentOffspring.push(offspring)
         }
     }
@@ -81,14 +81,6 @@ export const giveBirth = (map, color, armies, neighbours) => {
         for (let i = 0; i < state.length; i++) {
             let city = state[i]
             // We can attack by this city
-            city.neighbours = neighbours[city.name].map(citi => {
-                return map.filter(ct => {
-                    return ct.name === citi
-                })[0]
-            });
-            city.inside = city.neighbours.find((x) => {
-                return x.owner !== city.owner
-            }) === undefined
 
             if (city.owner === color) {
                 for (let k = 0; k < city.neighbours.length; k++) {
@@ -99,11 +91,11 @@ export const giveBirth = (map, color, armies, neighbours) => {
                             // let offspring = [...state] // Copy map by value
                             let offspring = cloneDeep(state)
                             // console.log("offspring: ", offspring)
-                            console.log(`offspring attacking before ${offspring[i].armies}`)
+                            // console.log(`offspring attacking before ${offspring[i].armies}`)
                             offspring[i].neighbours[k].armies = offspring[i].armies - 1
                             offspring[i].armies = 1
                             offspring[i].neighbours[k].owner = color
-                            console.log(`offspring attacking after ${offspring[i].armies}`)
+                            // console.log(`offspring attacking after ${offspring[i].armies}`)
                             attackingOffspring.push({
                                 "parent" : state, // The state of deployment
                                 "state" : offspring
