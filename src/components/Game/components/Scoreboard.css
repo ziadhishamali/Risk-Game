@@ -1,0 +1,34 @@
+.scoreboard-container {
+    flex: 1;
+    flex-direction: row !important;
+    align-items: center !important;
+    position: relative;
+}
+
+.candidate-card {
+    display: flex;
+    align-items: center !important;
+    position: absolute;
+}
+
+.trump{
+    left: 0;
+    bottom: 0;
+}
+
+.biden{
+    right: 0;
+    bottom: 0;
+}
+
+.red-bar {
+    height: 50px;
+    display: flex;
+    background-color: #C60203;
+}
+
+.blue-bar {
+    height: 50px;
+    display: flex;
+    background-color: #1C92D2;
+}

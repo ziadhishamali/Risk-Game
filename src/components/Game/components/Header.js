@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Scoreboard from './Scoreboard';
 
 export default function Header({ turn, isEgypt, currentCity, message, cities, isReadyToStart, setIsReadyToStart }) {
 
@@ -17,7 +18,7 @@ export default function Header({ turn, isEgypt, currentCity, message, cities, is
         <div className="board-header">
             <div className="board-header-item">
                 <span style={{ backgroundColor: turn % 2 === 0 ? "#c60203" : "#1c92d2" }}></span>
-                <h1>{playerName()}'s Turn</h1>
+                <h1>{playerName(turn % 2)}'s Turn</h1>
             </div>
 
             <div className="board-header-item no-of-turns">
@@ -47,35 +48,11 @@ export default function Header({ turn, isEgypt, currentCity, message, cities, is
                     </div>
                 </div>
 
-                <div className="board-header-item city-details board-score-container">
-                    <div className="board-score-item">
-                        <h1>{playerName(0) + ": "}</h1>
-                        {
-                            cities.map((city, idx) => {
-                                if (city.owner === 0) {
-                                    return <span key={idx} className={(isEgypt ? "is-egypt" : "")}>{/*city.name + " " + city.armies*/}</span>
-                                }
-                                return ""
-                            })
-                        }
-                    </div>
-
-                    <div className="board-score-item">
-                        <h1>{playerName(1) + ": "}</h1>
-                        {
-                            cities.map((city, idx) => {
-                                if (city.owner === 1) {
-                                    return <span key={idx} className={"blue-span " + (isEgypt ? "is-egypt" : "")}>{/*city.name + " " + city.armies*/}</span>
-                                }
-                                return ""
-                            })
-                        }
-                    </div>
-                </div>
+                <Scoreboard isEgypt={isEgypt} cities={cities} playerName={playerName} />
             </div>
 
             {/*<button onClick={() => setIsReadyToStart(!isReadyToStart)}>{isReadyToStart ? 'Pause' : 'Resume'}</button>*/}
-            
+
         </div>
     )
 }
