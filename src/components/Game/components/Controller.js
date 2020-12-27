@@ -54,12 +54,12 @@ const Controller = ({ isStart, isGameFinished, player1Agent, player2Agent, playe
 
         // check if game over
         let flag = true
-        console.log("cities: ", cities)
+        // console.log("cities: ", cities)
         for (let i = 1; i < cities.length; i++) {
             let city = cities[i]
             let previousCity = cities[i - 1]
 
-            console.log(cities, previousCity)
+            // console.log(cities, previousCity)
 
             if (city.owner !== previousCity.owner) {
                 flag = false
@@ -109,7 +109,7 @@ const Controller = ({ isStart, isGameFinished, player1Agent, player2Agent, playe
                 })
             })
         }
-    }, [cities, isPlayer1Playing, isPlayer2Playing, isStart, neighbours, player1, player1Agent, player2, player2Agent, setCities, setIsGameFinished, setIsGameOverDialogOpened, setMessage, setTurn, turn])
+    }, [cities, isGameFinished, isPlayer1Playing, isPlayer2Playing, isStart, neighbours, player1, player1Agent, player2, player2Agent, setCities, setIsGameFinished, setIsGameOverDialogOpened, setMessage, setTurn, t, tt, turn])
 
     return (
         ""

@@ -107,5 +107,5 @@ export const giveBirth = (map, color, armies, neighbours) => {
         }
     }
 
-    return [attackingOffspring, deploymentOffspring.length + attackingOffspring.length]
+    return [attackingOffspring, attackingOffspring.length]
 }
