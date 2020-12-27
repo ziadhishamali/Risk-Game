@@ -13,7 +13,9 @@ class GreedyAgent {
         let children = giveBirth(map, this.color, armies, neighbours)
 
         let minHeuristic = Number.MAX_SAFE_INTEGER
-        children.map(child => {
+        for (let i = 0; i < children.length; i++) {
+            let child = children[i]
+            
             // Find state with best heuristic
             let childHeuristic = calculateHeuristic(child["state"], this.color)
             if (childHeuristic < minHeuristic) {
@@ -21,16 +23,16 @@ class GreedyAgent {
                 this.newMap = child
                 console.log("new map: ", this.newMap)
             }
-        })
+        }
 
         // updateMap(map, this.newMap)
 
         // this.setMessage(`player ${this.color + 1} is deploying ...`)
-        return [`player ${this.color + 1} is deploying ...`, this.newMap["parent"]]
+        return [`player ${this.color + 1} is deploying ${armies} armies ...`, this.newMap["parent"]]
     }
 
     attack = (map) => {
-        console.log(this.newMap)
+        console.log("new map attacking: ", this.newMap)
         // this.setMessage(`player ${this.color + 1} is attacking ...`)
         return [`player ${this.color + 1} is attacking ...`, this.newMap["state"]]
     }

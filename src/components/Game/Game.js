@@ -218,7 +218,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
 
                 let name = element.getAttribute('name')
 
-                if (name === 'District of Columbia' || name === "" || name == "Luxor") {
+                if (name === 'District of Columbia' || name === "" || name === "Luxor") {
                     continue;
                 }
 
@@ -246,7 +246,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
             for (let i = 0; i < elements.length; i++) {
                 let element = elements[i]
                 element.removeEventListener('click', clickListener)
-                // element.removeEventListener('mouseover', hoverListener)
+                element.removeEventListener('mouseover', hoverListener)
             }
         };
     }, [cities, clickListener, firstClickCity, hoverListener, isListenersAdded, numTurns, player1Agent, player2Agent, secondClickCity])

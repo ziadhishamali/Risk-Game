@@ -17,7 +17,7 @@ class PacifistAgent {
         })[0]
         console.log("chosen city to deploy to", target);
         target.armies += armies
-        return [`deploying now to ${target.name}`, target]
+        return [`deploying now to ${target.name}`, map]
     }
 
     attack = (map, neighbours, owner) => {

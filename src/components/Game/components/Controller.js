@@ -21,9 +21,11 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
 
         const getExtraArmies = () => {
             let counter = 0
-            for (let city in cities)
-                if (city.owner === turn % 2)
+            for (let city in cities) {
+                if (city.owner === turn % 2) {
                     counter++
+                }
+            }
             return Math.max(3, parseInt(counter / 3))
         }
 
@@ -36,11 +38,11 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
             setMessage(message)
             sleep(2000).then(() => {
                 // console.log(`player 1: attacking ...`)
-                [message, citiesNew] = player1.attack(cities, neighbours, 0)
-                setMessage(message)
+                let [message2, citiesNew2] = player1.attack(cities, neighbours, 0)
+                setMessage(message2)
                 sleep(2000).then(() => {
                     setTurn(turn + 1)
-                    setCities(citiesNew)
+                    setCities(citiesNew2)
                     setIsPlayer1Playing(false)
                 })
             })
@@ -52,11 +54,11 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
             setMessage(message)
             sleep(2000).then(() => {
                 // console.log(`player 2: attacking ...`)
-                [message, citiesNew] = player2.attack(cities, neighbours , 1)
-                setMessage(message)
+                let [message2, citiesNew2] = player2.attack(cities, neighbours , 1)
+                setMessage(message2)
                 sleep(2000).then(() => {
                     setTurn(turn + 1)
-                    setCities(citiesNew)
+                    setCities(citiesNew2)
                     setIsPlayer2Playing(false)
                 })
             })

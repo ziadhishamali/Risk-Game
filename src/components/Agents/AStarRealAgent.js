@@ -5,6 +5,7 @@ class AStarRealAgent {
         this.color = color
         this.setCities = setCities
         this.setMessage = setMessage
+        this.cost = 0
     }
 
     deploy = (map, armies, neighbours) => {
@@ -15,7 +16,9 @@ class AStarRealAgent {
         this.cost += 1 // Cost represents number of turns
         children.map(child => {
             let childHeuristic = calculateHeuristic(child["state"], this.color)
+            console.log("heuristic: ", childHeuristic)
             if (childHeuristic + this.cost < minHeuristic) {
+                console.log("here heuristic")
                 minHeuristic = childHeuristic + this.cost
                 this.newMap = child
             }
