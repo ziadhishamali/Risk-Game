@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, turn, setTurn, cities, setCities, setMessage, neighbours, setIsGameOverDialogOpened, setIsGameFinished }) => {
+const Controller = ({ isStart, isGameFinished, player1Agent, player2Agent, player1, player2, turn, setTurn, cities, setCities, setMessage, neighbours, setIsGameOverDialogOpened, setIsGameFinished }) => {
     const sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -10,6 +10,9 @@ const Controller = ({ isStart, player1Agent, player2Agent, player1, player2, tur
 
     useEffect(() => {
         // console.log({ turn, isStart })
+        if (isGameFinished) {
+            return
+        }
 
         if (!isStart) {
             return

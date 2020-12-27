@@ -460,7 +460,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
     return (
         <div className="game-wrapper">
             <Board isEgypt={isEgypt} turn={numTurns} cities={cities} currentCity={currentCity} message={message} isReadyToStart={isReadyToStart} setIsReadyToStart={setIsReadyToStart} />
-            <Controller setIsGameOverDialogOpened={setIsGameOverDialogOpened} setIsGameFinished={setIsGameFinished} cities={cities} setCities={setCities} isStart={isReadyToStart} player1={player1} player1Agent={player1Agent} player2Agent={player2Agent} player2={player2} turn={numTurns} setTurn={setNumTurns} setMessage={setMessage} neighbours={isEgypt ? egNeighbourhood : usNeighbourhood} />
+            <Controller setIsGameOverDialogOpened={setIsGameOverDialogOpened} setIsGameFinished={setIsGameFinished} isGameFinished={isGameFinished} cities={cities} setCities={setCities} isStart={isReadyToStart} player1={player1} player1Agent={player1Agent} player2Agent={player2Agent} player2={player2} turn={numTurns} setTurn={setNumTurns} setMessage={setMessage} neighbours={isEgypt ? egNeighbourhood : usNeighbourhood} />
             <Dialog isOpen={showDialog} onClose={submitDialog} extraArmies={!turnStep ? extraArmies : firstClickCity && firstClickCity.armies - 1} message={dialogMessage} />
             <Dialog isOpen={isGameOverDialogOpened} onClose={() => setIsGameOverDialogOpened(false)} message={"Game Over"} />
         </div>
