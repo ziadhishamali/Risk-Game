@@ -25,10 +25,16 @@ class MinimaxAgent {
         // Generate next level of states
         let children = giveBirth(map, this.color, armies)
 
+        this.isNewMapChanged = false
         for (let i = 0; i < children.length; i++) {
             let child = children[i]
             let output = this.minmax(child["state"], armies, 1, -999999, 999999, true, child)
             this.newMap = output[1]
+            this.isNewMapChanged = true
+        }
+
+        if (!this.isNewMapChanged) {
+            return [`player ${this.color + 1} is deploying ${armies} armies ...`, map]
         }
 
         return [`player ${this.color + 1} is deploying ${armies} armies ...`, this.newMap["parent"]]
@@ -100,6 +106,10 @@ class MinimaxAgent {
 
     attack = (map) => {
         // TODO: fill in the attack logic
+        if (!this.isNewMapChanged) {
+            return [`player ${this.color + 1} can't attack any city`, map]
+        }
+
         return [`player ${this.color + 1} is attacking ...`, this.newMap["state"]]
     }
 }

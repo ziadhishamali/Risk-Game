@@ -36,7 +36,7 @@ class AStarAgent {
         let children = giveBirth(map, this.color, armies, neighbours)
 
         children.map((child, i) => {
-            console.log("child: ", child)
+            // console.log("child: ", child)
             let heuristic = calculateHeuristic(child["state"], this.color)
             PQueue.queue({ heuristic, state: child["state"], child })
         })
@@ -52,11 +52,11 @@ class AStarAgent {
                 return [`player ${this.color + 1} is deploying ...`, this.newMap["parent"]]
             }
 
-            console.log(state)
+            // console.log(state)
             // let stateKey = JSON.stringify(state)
             
             // Visited before
-            console.log(Object.keys(visited))
+            // console.log(Object.keys(visited))
             if (state in Object.keys(visited)) {
                 console.log("already visited")
                 continue
@@ -67,8 +67,8 @@ class AStarAgent {
 
             if (isGoalState(state, this.color)) {
                 this.newMap = queueItem['child']
-                console.log("old cities: ", map)
-                console.log("new cities: ", this.newMap["parent"])
+                // console.log("old cities: ", map)
+                // console.log("new cities: ", this.newMap["parent"])
                 // this.setMessage(`player ${this.color + 1} is deploying ...`)
                 return [`player ${this.color + 1} is deploying ...`, this.newMap["parent"]]
             }

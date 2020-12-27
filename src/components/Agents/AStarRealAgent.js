@@ -27,21 +27,31 @@ class AStarRealAgent {
         let children = giveBirth(map, this.color, armies, neighbours)
         let minHeuristic = 999999
         this.cost += 1 // Cost represents number of turns
+        this.isNewMapChanged = false
         children.map(child => {
             let childHeuristic = calculateHeuristic(child["state"], this.color)
-            console.log("heuristic: ", childHeuristic)
+            // console.log("heuristic: ", childHeuristic)
             if (childHeuristic + this.cost < minHeuristic) {
-                console.log("here heuristic")
+                // console.log("here heuristic")
                 minHeuristic = childHeuristic + this.cost
                 this.newMap = child
+                this.isNewMapChanged = true
             }
         })
+
+        if (!this.isNewMapChanged) {
+            return [`player ${this.color + 1} is deploying ...`, map]
+        }
 
         return [`player ${this.color + 1} is deploying ...`, this.newMap["parent"]]
     }
 
     attack = (map) => {
         // TODO: fill in the attack logic
+        if (!this.isNewMapChanged) {
+            return [`player ${this.color + 1} can't attack any city`, map]
+        }
+
         return [`player ${this.color + 1} is attacking ...`, this.newMap["state"]]
     }
 }

@@ -136,6 +136,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
     const [player2, setPlayer2] = useState(undefined)
 
     const [isGameFinished, setIsGameFinished] = useState(false)
+    const [isGameOverDialogOpened, setIsGameOverDialogOpened] = useState(false)
 
     const getAgent = (agentName, color) => {
         switch (agentName) {
@@ -380,7 +381,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                 setTurnStep(1)
             }
 
-            if (turnStep !== 0) {
+            if (turnStep === 1) {
                 // attacking process
                 // wait till human player presses next
                 setMessage(`player ${numTurns % 2 + 1}: Choose a city from yours to begin the attack`)
@@ -424,7 +425,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                                 setSecondClickCity(undefined)
                                 setDialogDone(false)
                                 setNumTurns(numTurns + 1)
-                                setTurnStep(0)
+                                setTurnStep(2)
                             }
                         }
                     } else {
@@ -432,14 +433,36 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                     }
                 }
             }
+
+            if (turnStep === 2) {
+                // check if game over
+                let flag = true
+                for (let i = 1; i < cities.length; i++) {
+                    let city = cities[i]
+                    let previousCity = cities[i - 1]
+
+                    if (city.owner !== previousCity.owner) {
+                        flag = false
+                        break;
+                    }
+                }
+
+                if (flag) {
+                    setIsGameFinished(true)
+                    setIsGameOverDialogOpened(true)
+                }
+
+                setTurnStep(0)
+            }
         }
-    }, [cities, dialogDone, dialogValue, extraArmies, firstClickCity, isReadyToStart, numTurns, player1, player1Agent, player2, player2Agent, secondClickCity, showDialog, turnStep])
+    }, [cities, dialogDone, dialogValue, extraArmies, firstClickCity, isGameFinished, isReadyToStart, numTurns, player1, player1Agent, player2, player2Agent, secondClickCity, showDialog, turnStep])
 
     return (
         <div className="game-wrapper">
             <Board isEgypt={isEgypt} turn={numTurns} cities={cities} currentCity={currentCity} message={message} isReadyToStart={isReadyToStart} setIsReadyToStart={setIsReadyToStart} />
-            <Controller cities={cities} setCities={setCities} isStart={isReadyToStart} player1={player1} player1Agent={player1Agent} player2Agent={player2Agent} player2={player2} turn={numTurns} setTurn={setNumTurns} setMessage={setMessage} neighbours={isEgypt ? egNeighbourhood : usNeighbourhood} />
+            <Controller setIsGameOverDialogOpened={setIsGameOverDialogOpened} setIsGameFinished={setIsGameFinished} cities={cities} setCities={setCities} isStart={isReadyToStart} player1={player1} player1Agent={player1Agent} player2Agent={player2Agent} player2={player2} turn={numTurns} setTurn={setNumTurns} setMessage={setMessage} neighbours={isEgypt ? egNeighbourhood : usNeighbourhood} />
             <Dialog isOpen={showDialog} onClose={submitDialog} extraArmies={!turnStep ? extraArmies : firstClickCity && firstClickCity.armies - 1} message={dialogMessage} />
+            <Dialog isOpen={isGameOverDialogOpened} onClose={() => setIsGameOverDialogOpened(false)} message={"Game Over"} />
         </div>
     )
 }
