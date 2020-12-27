@@ -135,6 +135,8 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
     const [player1, setPlayer1] = useState(undefined)
     const [player2, setPlayer2] = useState(undefined)
 
+    const [isGameFinished, setIsGameFinished] = useState(false)
+
     const getAgent = (agentName, color) => {
         switch (agentName) {
             case 'passive agent':
@@ -197,17 +199,9 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
     }, [cities])
 
     useEffect(() => {
-        /*if (isListenersAdded) {
-            /* console.log("remove")
-            let elements = window.document.getElementsByTagName("path")
-            for (let i = 0; i < elements.length; i++) {
-                let element = elements[i]
-
-                element.removeEventListener('click', clickListener)
-            }
-
-            return;
-        }*/
+        if (isGameFinished) {
+            return
+        }
 
         if (cities.length) {
             // console.log('here')
@@ -252,7 +246,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
                 element.removeEventListener('mouseover', hoverListener)
             }
         };
-    }, [cities, clickListener, firstClickCity, hoverListener, isListenersAdded, numTurns, player1Agent, player2Agent, secondClickCity])
+    }, [cities, clickListener, firstClickCity, hoverListener, isGameFinished, isListenersAdded, isReadyToStart, numTurns, player1Agent, player2Agent, secondClickCity])
 
     useEffect(() => {
         // construct the two players
@@ -315,13 +309,13 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
         setCities(cities)
     }, [isEgypt, player1Agent, player2Agent])
 
-    useEffect(() => {
-        console.log("first city changed ...", firstClickCity)
-    }, [firstClickCity])
+    // useEffect(() => {
+    //     console.log("first city changed ...", firstClickCity)
+    // }, [firstClickCity])
 
-    useEffect(() => {
-        console.log("second city changed ...", secondClickCity)
-    }, [secondClickCity])
+    // useEffect(() => {
+    //     console.log("second city changed ...", secondClickCity)
+    // }, [secondClickCity])
 
     const submitDialog = (value) => {
         if (value === "") {
@@ -333,6 +327,10 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
     }
 
     useEffect(() => {
+        if (isGameFinished) {
+            return
+        }
+
         if (!isReadyToStart) {
             console.log("not ready")
             return
@@ -349,7 +347,7 @@ const Game = ({ isEgypt, player1Agent, player2Agent }) => {
         if (extraArmies === "") setExtraArmies(getExtraArmies())
 
         if ((numTurns % 2 === 0 && player1Agent === 'human agent') || (numTurns % 2 !== 0 && player2Agent === 'human agent')) {
-            console.log(`player ${numTurns % 2 + 1}: deploying ${extraArmies} armies in step ${turnStep} ...`)
+            // console.log(`player ${numTurns % 2 + 1}: deploying ${extraArmies} armies in step ${turnStep} ...`)
             setMessage(`player ${numTurns % 2 + 1}: Choose cities to deploy your armies, (left ${extraArmies} armies)`)
             // let message = player1.deploy()
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function Header({ turn, isEgypt, currentCity, message, isReadyToStart, setIsReadyToStart }) {
+export default function Header({ turn, isEgypt, currentCity, message, cities, isReadyToStart, setIsReadyToStart }) {
 
     const [cc, setCC] = useState(currentCity);
 
@@ -10,8 +10,7 @@ export default function Header({ turn, isEgypt, currentCity, message, isReadyToS
     }, [currentCity])
 
     let playerName = (owner) => {
-        let x = owner || turn;
-        return isEgypt ? x % 2 === 0 ? "player red" : "player blue" : x % 2 === 0 ? "Trump" : "Biden";
+        return isEgypt ? owner === 0 ? "player red" : "player blue" : owner === 0 ? "Trump" : "Biden";
     }
 
     return (
@@ -31,11 +30,48 @@ export default function Header({ turn, isEgypt, currentCity, message, isReadyToS
             </div>
 
             <div className="city-details-container">
-                {currentCity && currentCity.name && <div className="board-header-item city-details">
-                    <h1>{`City: ${currentCity.name}`}</h1>
-                    <h1>{`Occupied by: ${playerName(currentCity.owner)}`}</h1>
-                    <h1>{`Army: ${currentCity.armies}`}</h1>
-                </div>}
+                <div className="board-header-item city-details">
+                    <div className="board-header-item-info">
+                        <h1>{`City: `}</h1>
+                        {currentCity && <h2>{currentCity.name}</h2>}
+                    </div>
+
+                    <div className="board-header-item-info">
+                        <h1>{`Occupied by: `}</h1>
+                        {currentCity && <h2>{playerName(currentCity.owner)}</h2>}
+                    </div>
+
+                    <div className="board-header-item-info">
+                        <h1>{`Army: `}</h1>
+                        {currentCity && <h2>{currentCity.armies}</h2>}
+                    </div>
+                </div>
+
+                <div className="board-header-item city-details board-score-container">
+                    <div className="board-score-item">
+                        <h1>{playerName(0) + ": "}</h1>
+                        {
+                            cities.map((city, idx) => {
+                                if (city.owner === 0) {
+                                    return <span key={idx} className={(isEgypt ? "is-egypt" : "")}>{/*city.name + " " + city.armies*/}</span>
+                                }
+                                return ""
+                            })
+                        }
+                    </div>
+
+                    <div className="board-score-item">
+                        <h1>{playerName(1) + ": "}</h1>
+                        {
+                            cities.map((city, idx) => {
+                                if (city.owner === 1) {
+                                    return <span key={idx} className={"blue-span " + (isEgypt ? "is-egypt" : "")}>{/*city.name + " " + city.armies*/}</span>
+                                }
+                                return ""
+                            })
+                        }
+                    </div>
+                </div>
             </div>
 
             {/*<button onClick={() => setIsReadyToStart(!isReadyToStart)}>{isReadyToStart ? 'Pause' : 'Resume'}</button>*/}

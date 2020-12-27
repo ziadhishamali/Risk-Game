@@ -68,11 +68,11 @@
 
 .board-header {
     width: 100%;
-    padding: 10px;
+    padding: 10px 20px;
     display: flex;
     /* flex-direction: column; */
     flex-flow: row wrap;
-    background-color: lightslategray;
+    background-color: rgba(255, 255, 255, 0.6);
     justify-content: space-between;
     align-items: center;
     border-bottom-width: 2;
@@ -95,12 +95,22 @@
 
 .city-details-container {
     width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
 }
 
 .city-details {
     width: fit-content;
     flex-direction: column;
     align-items: flex-start;
+}
+
+.board-header-item-info {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .board-header-item h1 {
@@ -124,6 +134,45 @@
     height: 30px;
     border-radius: 50px;
     /* margin-left: 10px; */
+}
+
+.board-score-container {
+    flex: 1;
+}
+
+.board-score-item {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.board-score-item span {
+    width: calc((100% - 200px) / 50);
+    height: 20px;
+    border-radius: 0px;
+    background-color: #c60203;
+    /* width: fit-content;
+    height: fit-content;
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    margin: 5px;
+    font-size: 18px;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+}
+
+.board-score-item span.blue-span {
+    background-color: #1c92d2;
+}
+
+.board-score-item span.is-egypt {
+    width: calc((100% - 200px) / 28);
 }
 
 /* ###################################################################################### */
