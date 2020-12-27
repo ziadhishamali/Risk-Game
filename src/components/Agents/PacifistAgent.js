@@ -7,17 +7,25 @@ class PacifistAgent {
 
     deploy = (map, armies) => {
         // TODO: fill in the deploy logic
-        let min = Number.MAX_SAFE_INTEGER;
-        let target = map.filter(city => {
+        let [min, idx] = [Number.MAX_SAFE_INTEGER, -1];
+        for (let i = 0; i < map.length; i++) {
+            const city = map[i];
             if (city.owner === this.color && city.armies < min) {
                 min = city.armies;
-                return true
+                idx = i;
             }
-            return false
-        })[0]
-        console.log("chosen city to deploy to", target);
-        target.armies += armies
-        return [`deploying now to ${target.name}`, map]
+        }
+        // let min = Number.MAX_SAFE_INTEGER;
+        // let target = map.filter(city => {
+        //     if (city.owner === this.color && city.armies < min) {
+        //         min = city.armies;
+        //         return true
+        //     }
+        //     return false
+        // })[0]
+        console.log("chosen city to deploy to", map[idx]);
+        map[idx].armies += armies
+        return [`deploying now to ${map[idx].name}`, map]
     }
 
     attack = (map, neighbours, owner) => {
