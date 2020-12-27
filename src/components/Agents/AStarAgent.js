@@ -13,7 +13,9 @@ class AStarAgent {
         return a.heuristic - b.heuristic
     }
 
-    deploy = (map, armies, neighbours) => {
+    deploy = (map, armies, neighbours, t, setT) => {
+
+        let currT = 0;
         // TODO: fill in the deploy logic
         for (let i = 0; i < map.length; i++) {
             let city = map[i]
@@ -33,7 +35,8 @@ class AStarAgent {
         let cost = 0
 
         // Generate next level of states
-        let children = giveBirth(map, this.color, armies, neighbours)
+        let [children, T] = giveBirth(map, this.color, armies, neighbours)
+        currT += T;
 
         children.map((child, i) => {
             // console.log("child: ", child)
@@ -41,7 +44,7 @@ class AStarAgent {
             PQueue.queue({ heuristic, state: child["state"], child })
         })
 
-        while(PQueue.length) {
+        while (PQueue.length) {
             let queueItem = PQueue.dequeue()
             let state = queueItem['state']
 
@@ -54,7 +57,7 @@ class AStarAgent {
 
             // console.log(state)
             // let stateKey = JSON.stringify(state)
-            
+
             // Visited before
             // console.log(Object.keys(visited))
             if (state in Object.keys(visited)) {
@@ -70,18 +73,20 @@ class AStarAgent {
                 // console.log("old cities: ", map)
                 // console.log("new cities: ", this.newMap["parent"])
                 // this.setMessage(`player ${this.color + 1} is deploying ...`)
+                setT(t + currT)
                 return [`player ${this.color + 1} is deploying ...`, this.newMap["parent"]]
             }
 
             let newArmies = calculateBonus(state, this.color)
-            let children = giveBirth(state, this.color, newArmies, neighbours)
+            let [children, T] = giveBirth(state, this.color, newArmies, neighbours)
+            currT += T
             cost += 1
             children.map((child, i) => {
                 let heuristic = calculateHeuristic(child["state"], this.color)
-                PQueue.queue({heuristic: heuristic + cost, state: child["state"], child: queueItem["child"]})
+                PQueue.queue({ heuristic: heuristic + cost, state: child["state"], child: queueItem["child"] })
             })
         }
-
+        setT(t + currT)
         return "deploying now"
     }
 

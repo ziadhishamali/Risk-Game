@@ -18,14 +18,14 @@ export const updateMap = (oldMap, newMap) => {
         city.owner = newMap[i].owner
     }
 }
-    
+
 
 export const calculateHeuristic = (map, color) => {
     let counter = 0
     for (let i = 0; i < map.length; i++) {
         let city = map[i]
         if (city.owner !== color) {
-            counter += city.armies   
+            counter += city.armies
         }
     }
 
@@ -37,10 +37,10 @@ export const calculateBonus = (map, color) => {
     for (let i = 0; i < map.length; i++) {
         let city = map[i]
         if (city.owner === color) {
-            counter+=1
+            counter += 1
         }
     }
-    return Math.max(3, parseInt(counter/3))
+    return Math.max(3, parseInt(counter / 3))
 }
 
 export const isGoalState = (map, color) => {
@@ -97,8 +97,8 @@ export const giveBirth = (map, color, armies, neighbours) => {
                             offspring[i].neighbours[k].owner = color
                             // console.log(`offspring attacking after ${offspring[i].armies}`)
                             attackingOffspring.push({
-                                "parent" : state, // The state of deployment
-                                "state" : offspring
+                                "parent": state, // The state of deployment
+                                "state": offspring
                             })
                         }
                     }
@@ -106,6 +106,6 @@ export const giveBirth = (map, color, armies, neighbours) => {
             }
         }
     }
-        
-    return attackingOffspring
+
+    return [attackingOffspring, deploymentOffspring.length + attackingOffspring.length]
 }

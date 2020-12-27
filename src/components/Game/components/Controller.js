@@ -7,6 +7,22 @@ const Controller = ({ isStart, isGameFinished, player1Agent, player2Agent, playe
 
     const [isPlayer1Playing, setIsPlayer1Playing] = useState(false)
     const [isPlayer2Playing, setIsPlayer2Playing] = useState(false)
+    const [t, setT] = useState(0)
+    const [tt, setTT] = useState(0)
+
+    useEffect(() => {
+        console.log("########### Player 1 ##########");
+        [1, 100, 10000].forEach(f => {
+            console.log(`P(f=${f}) = ${f*turn + t}`);
+        })
+    }, [t])
+    
+    useEffect(() => {
+        console.log("########## Player 2 ##########");
+        [1, 100, 10000].forEach(f => {
+            console.log(`P(f=${f}) = ${f*turn + tt}`);
+        })
+    },[tt])
 
     useEffect(() => {
         // console.log({ turn, isStart })
@@ -61,7 +77,7 @@ const Controller = ({ isStart, isGameFinished, player1Agent, player2Agent, playe
         if (turn % 2 === 0 && player1Agent !== 'human agent') {
             setIsPlayer1Playing(true)
             // console.log(`player 1: deploying ${extraArmies} armies ...`)
-            let [message, citiesNew] = player1.deploy(cities, extraArmies, neighbours)
+            let [message, citiesNew] = player1.deploy(cities, extraArmies, neighbours, t, setT)
             setCities(citiesNew)
             setMessage(message)
             sleep(2000).then(() => {
@@ -78,12 +94,12 @@ const Controller = ({ isStart, isGameFinished, player1Agent, player2Agent, playe
         } else if (turn % 2 === 1 && player2Agent !== 'human agent') {
             setIsPlayer2Playing(true)
             // console.log(`player 2: deploying ${extraArmies} armies ...`)
-            let [message, citiesNew] = player2.deploy(cities, extraArmies, neighbours)
+            let [message, citiesNew] = player2.deploy(cities, extraArmies, neighbours, tt, setTT)
             setCities(citiesNew)
             setMessage(message)
             sleep(2000).then(() => {
                 // console.log(`player 2: attacking ...`)
-                let [message2, citiesNew2] = player2.attack(cities, neighbours , 1)
+                let [message2, citiesNew2] = player2.attack(cities, neighbours, 1)
                 setMessage(message2)
 
                 sleep(2000).then(() => {

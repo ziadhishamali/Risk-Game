@@ -7,7 +7,9 @@ class GreedyAgent {
         this.setMessage = setMessage
     }
 
-    deploy = (map, armies, neighbours) => {
+    deploy = (map, armies, neighbours, t, setT) => {
+
+        let currT = 0
         // TODO: fill in the deploy logic
         for (let i = 0; i < map.length; i++) {
             let city = map[i]
@@ -21,16 +23,17 @@ class GreedyAgent {
                 return x.owner !== city.owner
             }) === undefined
         }
-        
+
 
         // Generate next level of states
-        let children = giveBirth(map, this.color, armies, neighbours)
+        let [children, T] = giveBirth(map, this.color, armies, neighbours)
+        currT += T
 
         let minHeuristic = Number.MAX_SAFE_INTEGER
         this.isNewMapChanged = false;
         for (let i = 0; i < children.length; i++) {
             let child = children[i]
-            
+
             // Find state with best heuristic
             let childHeuristic = calculateHeuristic(child["state"], this.color)
             if (childHeuristic < minHeuristic) {
@@ -41,6 +44,7 @@ class GreedyAgent {
             }
         }
 
+        setT(t + currT)
         // updateMap(map, this.newMap)
 
         if (!this.isNewMapChanged) {

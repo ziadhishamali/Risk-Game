@@ -8,7 +8,9 @@ class AStarRealAgent {
         this.cost = 0
     }
 
-    deploy = (map, armies, neighbours) => {
+    deploy = (map, armies, neighbours, t, setT) => {
+
+        let currT = 0
         // TODO: fill in the deploy logic
         for (let i = 0; i < map.length; i++) {
             let city = map[i]
@@ -24,7 +26,8 @@ class AStarRealAgent {
         }
 
         // Generate next level of states
-        let children = giveBirth(map, this.color, armies, neighbours)
+        let [children, T] = giveBirth(map, this.color, armies, neighbours)
+        currT += T
         let minHeuristic = 999999
         this.cost += 1 // Cost represents number of turns
         this.isNewMapChanged = false
@@ -38,6 +41,8 @@ class AStarRealAgent {
                 this.isNewMapChanged = true
             }
         })
+
+        setT(t + currT)
 
         if (!this.isNewMapChanged) {
             return [`player ${this.color + 1} is deploying ...`, map]

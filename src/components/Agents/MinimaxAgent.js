@@ -7,7 +7,9 @@ class MinimaxAgent {
         this.setMessage = setMessage
     }
 
-    deploy = (map, armies, neighbours) => {
+    deploy = (map, armies, neighbours, t, setT) => {
+
+        let currT = 0
         // TODO: fill in the deploy logic
         for (let i = 0; i < map.length; i++) {
             let city = map[i]
@@ -23,15 +25,18 @@ class MinimaxAgent {
         }
 
         // Generate next level of states
-        let children = giveBirth(map, this.color, armies)
+        let [children, T] = giveBirth(map, this.color, armies)
+        currT += T
 
         this.isNewMapChanged = false
         for (let i = 0; i < children.length; i++) {
             let child = children[i]
-            let output = this.minmax(child["state"], armies, 1, -999999, 999999, true, child)
+            let output = this.minmax(child["state"], armies, 1, -999999, 999999, true, child, currT)
             this.newMap = output[1]
             this.isNewMapChanged = true
         }
+
+        setT(currT + t)
 
         if (!this.isNewMapChanged) {
             return [`player ${this.color + 1} is deploying ${armies} armies ...`, map]
@@ -40,7 +45,7 @@ class MinimaxAgent {
         return [`player ${this.color + 1} is deploying ${armies} armies ...`, this.newMap["parent"]]
     }
 
-    minmax = (state, armies, depth, alpha, beta, isMaximumTurn, toReturn) => {
+    minmax = (state, armies, depth, alpha, beta, isMaximumTurn, toReturn, currT) => {
         // Check for termination
         if (depth === 0 || isGoalState(state, this.color)) {
             let heuristic = calculateHeuristic(state, this.color)
@@ -50,8 +55,8 @@ class MinimaxAgent {
         //This player turn
         if (isMaximumTurn) {
             let maximumHeuristic = [-999999, null]
-            let nextStates = giveBirth(state, this.color, armies)
-
+            let [nextStates, T] = giveBirth(state, this.color, armies)
+            currT += T
             for (let i = 0; i < nextStates.length; i++) {
                 let nextState = nextStates[i]
                 let newArmies = calculateBonus(nextState["state"], this.color)
@@ -76,12 +81,13 @@ class MinimaxAgent {
             return [maximumHeuristic[0], toReturn]
         } else { // Opponent turn
             let minimumHeuristic = [999999, null]
-            let nextStates = giveBirth(state, this.color, armies)
+            let [nextStates, T] = giveBirth(state, this.color, armies)
+            currT += T
 
             for (let i = 0; i < nextStates.length; i++) {
                 let nextState = nextStates[i]
                 let newArmies = calculateBonus(nextState["state"], this.color)
-                let nextStateResult = this.minmax(nextState["state"], newArmies, depth-1, alpha, beta, true, toReturn)
+                let nextStateResult = this.minmax(nextState["state"], newArmies, depth - 1, alpha, beta, true, toReturn)
 
                 // Compare for minimum heuristic
                 if (nextStateResult[0] < minimumHeuristic[0]) {
